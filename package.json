@@ -2,17 +2,24 @@
   "private": true,
   "sideEffects": false,
   "scripts": {
-    "build": "remix build",
-    "dev": "remix dev",
+    "build": "npm run build:css && remix build",
+    "build:css": "tailwindcss -m -i ./styles/app.css -o app/styles/app.css",
+    "dev": "concurrently \"npm run dev:css\" \"remix dev\"",
+    "dev:css": "tailwindcss -w -i ./styles/app.css -o app/styles/app.css",
+    "sync:types": "supabase gen types typescript --linked > app/types/db.types.ts",
     "typecheck": "tsc -b"
   },
   "dependencies": {
     "@remix-run/node": "^1.9.0",
     "@remix-run/react": "^1.9.0",
     "@remix-run/vercel": "^1.9.0",
+    "@supabase/supabase-js": "^2.2.1",
     "@vercel/node": "^2.6.2",
+    "classnames": "^2.3.2",
+    "dayjs": "^1.11.7",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "timeago.js": "^4.0.2"
   },
   "devDependencies": {
     "@remix-run/dev": "^1.9.0",
@@ -20,7 +27,11 @@
     "@remix-run/serve": "^1.9.0",
     "@types/react": "^18.0.25",
     "@types/react-dom": "^18.0.8",
+    "autoprefixer": "^10.4.13",
+    "concurrently": "^7.6.0",
     "eslint": "^8.27.0",
+    "postcss": "^8.4.20",
+    "tailwindcss": "^3.2.4",
     "typescript": "^4.8.4"
   },
   "engines": {
